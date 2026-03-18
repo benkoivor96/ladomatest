@@ -3,1436 +3,635 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Doma Art — Izrada i Montaža Namještaja i Kuhinja, Zagreb</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<title>La DoMa Art — Izrada namještaja po mjeri</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F5F0E8;
-    --warm-white: #FAF7F2;
-    --charcoal: #1C1C1A;
-    --walnut: #5C3D2E;
-    --gold: #C9A84C;
-    --clay: #A0714F;
-    --mist: #E8E0D4;
-    --dark-wood: #2E1F0F;
+    --bg: #f7f4f0;
+    --bg2: #eeebe5;
+    --surface: #e8e4dd;
+    --surface2: #ddd9d1;
+    --cream: #1a1714;
+    --cream-dim: #4a453d;
+    --cream-muted: #8a857b;
+    --gold: #9a7b52;
+    --gold-light: #b8976a;
+    --gold-glow: rgba(154, 123, 82, 0.12);
+    --gold-glow2: rgba(154, 123, 82, 0.06);
+    --border: rgba(26, 23, 20, 0.08);
+    --border-gold: rgba(154, 123, 82, 0.25);
+    --blue: #21a6de;
+    --blue-glow: rgba(33, 166, 222, 0.12);
+    --heading: 'Cormorant Garamond', Georgia, serif;
+    --body: 'DM Sans', sans-serif;
   }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--surface) var(--bg); }
 
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--warm-white);
-    color: var(--charcoal);
-    overflow-x: hidden;
+  body { font-family: var(--body); background: var(--bg); color: var(--cream); overflow-x: hidden; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* ═══ SUBTLE GRAIN ═══ */
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.012'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 10000;
   }
 
-  /* ─── NAVIGATION ─────────────────────────────────── */
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ═══ NAV ═══ */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.5rem 4rem;
-    background: rgba(250,247,242,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--mist);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 1.2rem 4rem; display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px) saturate(1.3); background: rgba(247, 244, 240, 0.8);
+    border-bottom: 1px solid var(--border); transition: all 0.4s;
   }
 
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    color: var(--charcoal);
-    text-decoration: none;
-  }
-
-  .logo span {
-    color: var(--gold);
-    font-style: italic;
-  }
-
-  .nav-links {
-    display: flex; gap: 2.5rem; list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
+  .nav-logo {
+    font-family: var(--heading); font-size: 1.6rem; font-weight: 300;
+    letter-spacing: 0.08em; text-decoration: none; color: var(--cream);
     text-transform: uppercase;
-    color: var(--charcoal);
-    text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.3s, color 0.3s;
   }
+  .nav-logo strong { font-weight: 600; color: var(--gold); }
 
-  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream-muted); text-decoration: none; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--blue); }
+  .nav-links a:hover::after { width: 100%; background: var(--blue); }
 
   .nav-cta {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--warm-white) !important;
-    background: var(--walnut);
-    padding: 0.7rem 1.8rem;
-    opacity: 1 !important;
-    transition: background 0.3s !important;
+    color: #fff !important; background: var(--gold); padding: 0.5rem 1.4rem;
+    border-radius: 0; font-weight: 600 !important; letter-spacing: 0.08em !important;
+    transition: all 0.3s !important;
   }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--blue) !important; }
 
-  .nav-cta:hover { background: var(--clay) !important; color: var(--warm-white) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 26px; height: 1.5px; background: var(--cream); margin: 6px 0; transition: all 0.3s; }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-  /* ─── HERO ────────────────────────────────────────── */
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; background: rgba(247,244,240,0.97);
+    backdrop-filter: blur(20px); z-index: 999;
+    flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+  }
+  .mobile-menu.active { display: flex; }
+  .mobile-menu a {
+    color: var(--cream); text-decoration: none; font-family: var(--heading);
+    font-size: 1.8rem; font-weight: 400; letter-spacing: 0.04em;
+  }
+  .mobile-menu a:hover { color: var(--blue); }
+
+  /* ═══ HERO ═══ */
   .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
-    overflow: hidden;
+    position: relative; min-height: 100vh; display: flex; align-items: flex-end;
+    padding: 0; overflow: hidden;
   }
 
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 6rem 4rem 6rem 6rem;
-    position: relative;
+  .hero-image {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .hero-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,8,0.15) 0%, rgba(10,10,8,0.05) 30%, rgba(10,10,8,0.55) 75%, rgba(10,10,8,0.8) 90%, var(--bg) 100%);
   }
 
-  .hero-left::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 100%);
-    z-index: -1;
+  .hero-content {
+    position: relative; z-index: 2; padding: 0 4rem 5rem; width: 100%;
+    color: #f5f0e8;
   }
 
-  .hero-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.3s ease forwards;
+  .hero-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 1.2rem; animation: fadeUp 0.8s ease both;
+  }
+  .hero-label span {
+    display: inline-block; width: 40px; height: 1px; background: var(--gold-light);
+    vertical-align: middle; margin-right: 0.8rem;
   }
 
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    color: var(--charcoal);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.5s ease forwards;
+  .hero h1 {
+    font-family: var(--heading); font-size: clamp(3rem, 7vw, 6rem); font-weight: 300;
+    line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease 0.1s both; max-width: 800px;
+  }
+  .hero h1 em { font-style: italic; font-weight: 400; color: #d4b98a; }
+
+  .hero-desc {
+    font-size: 1.05rem; color: #c8c2b6; max-width: 480px;
+    line-height: 1.7; margin-bottom: 2.5rem; animation: fadeUp 0.8s ease 0.2s both;
   }
 
-  .hero-title em {
-    font-style: italic;
-    color: var(--walnut);
-    display: block;
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 1rem;
+    padding: 1rem 2.2rem; background: var(--gold-light); color: #fff;
+    text-decoration: none; font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all 0.4s; animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .hero-cta:hover { background: var(--blue); letter-spacing: 0.14em; }
+  .hero-cta .arrow { transition: transform 0.3s; }
+  .hero-cta:hover .arrow { transform: translateX(4px); }
+
+  /* ═══ ABOUT STRIP ═══ */
+  .about-strip {
+    position: relative; z-index: 1; padding: 5rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
+    border-bottom: 1px solid var(--border); background: var(--bg);
   }
 
-  .hero-sub {
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: var(--charcoal);
-    opacity: 0;
-    max-width: 420px;
-    margin-bottom: 3rem;
-    animation: fadeUp 0.8s 0.7s ease forwards;
+  .about-item { text-align: center; }
+  .about-num {
+    font-family: var(--heading); font-size: 3rem; font-weight: 300; color: var(--gold);
+    line-height: 1; margin-bottom: 0.5rem;
   }
+  .about-label { font-size: 0.82rem; color: var(--cream-muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
 
-  .hero-sub strong { font-weight: 500; color: var(--walnut); }
+  /* ═══ SECTION COMMON ═══ */
+  section { position: relative; z-index: 1; }
 
-  .hero-actions {
-    display: flex; gap: 1.5rem; align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.9s ease forwards;
+  .section-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
   }
-
-  .btn-primary {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--warm-white);
-    background: var(--walnut);
-    padding: 1.1rem 2.5rem;
-    text-decoration: none;
-    border: none; cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-    display: inline-block;
-  }
-
-  .btn-primary:hover { background: var(--clay); transform: translateY(-2px); }
-
-  .btn-secondary {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 400;
-    color: var(--walnut);
-    text-decoration: none;
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 2px;
-    transition: color 0.3s, border-color 0.3s;
-  }
-
-  .btn-secondary:hover { color: var(--gold); }
-
-  .hero-right {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-img-container {
-    width: 100%; height: 100%;
-    background: var(--dark-wood);
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Decorative kitchen illustration using CSS */
-  .hero-visual {
-    width: 100%; height: 100%;
-    position: relative;
-    background: linear-gradient(160deg, #2E1F0F 0%, #3D2A17 40%, #4A3320 70%, #5C3D2E 100%);
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .kitchen-scene {
-    width: 80%; height: 75%;
-    position: relative;
-  }
-
-  /* Cabinet bodies */
-  .cab { position: absolute; background: linear-gradient(180deg, #C5A880 0%, #A8885C 100%); border: 1px solid #8A6A40; }
-  .cab-upper-left  { top: 5%; left: 0; width: 38%; height: 40%; }
-  .cab-upper-mid   { top: 5%; left: 40%; width: 22%; height: 40%; }
-  .cab-upper-right { top: 5%; right: 0; width: 35%; height: 40%; }
-  .cab-lower-left  { bottom: 0; left: 0; width: 48%; height: 50%; background: linear-gradient(180deg, #B89870 0%, #9A7848 100%); }
-  .cab-lower-right { bottom: 0; right: 0; width: 48%; height: 50%; background: linear-gradient(180deg, #B89870 0%, #9A7848 100%); }
-
-  /* Handles */
-  .handle {
-    position: absolute;
-    width: 28px; height: 4px;
-    background: linear-gradient(90deg, #D4AF70, #F0D090, #D4AF70);
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-  }
-  .h1 { bottom: 30%; left: 50%; transform: translateX(-50%); }
-  .h2 { bottom: 30%; left: 50%; transform: translateX(-50%); }
-  .h3 { bottom: 30%; left: 50%; transform: translateX(-50%); }
-
-  /* Countertop */
-  .countertop {
-    position: absolute;
-    bottom: 49%; left: -2%; right: -2%;
-    height: 6px;
-    background: linear-gradient(90deg, #E8E0D4, #D4CCC0, #E8E0D4);
-    border-top: 2px solid #C0B8A8;
-    z-index: 5;
-  }
-
-  /* Backsplash */
-  .backsplash {
-    position: absolute;
-    bottom: 55%; left: 0; right: 0; height: 14%;
-    background: repeating-linear-gradient(
-      90deg, transparent, transparent 29px, rgba(255,255,255,0.08) 29px, rgba(255,255,255,0.08) 30px
-    ),
-    repeating-linear-gradient(
-      0deg, transparent, transparent 29px, rgba(255,255,255,0.08) 29px, rgba(255,255,255,0.08) 30px
-    );
-    background-color: #E2D5C3;
-  }
-
-  /* Sink */
-  .sink {
-    position: absolute;
-    bottom: 52%; left: 50%; transform: translateX(-50%);
-    width: 80px; height: 18px;
-    background: linear-gradient(180deg, #C8C0B8, #A0988E);
-    border-radius: 4px 4px 8px 8px;
-    border: 1px solid #908880;
-    z-index: 6;
-  }
-
-  .faucet {
-    position: absolute;
-    bottom: 57%; left: 50%; transform: translateX(-50%);
-    width: 4px; height: 20px;
-    background: linear-gradient(90deg, #D0C8BE, #B8B0A6, #D0C8BE);
-    border-radius: 2px;
-    z-index: 7;
-  }
-
-  .faucet::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%; transform: translateX(-50%) rotate(-40deg);
-    width: 4px; height: 14px;
-    background: inherit;
-    border-radius: 2px;
-    transform-origin: bottom center;
-  }
-
-  /* Window behind cabinets */
-  .window-bg {
-    position: absolute;
-    top: 5%; left: 40%; width: 22%; height: 40%;
-    background: linear-gradient(160deg, #8BAAB8 0%, #7A9AAA 60%, #6A8A9A 100%);
-    border: 2px solid #5A7A8A;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .window-bg::before, .window-bg::after {
-    content: '';
-    position: absolute;
-    background: rgba(255,255,255,0.15);
-  }
-
-  .window-bg::before { top: 0; left: 50%; width: 2px; height: 100%; }
-  .window-bg::after  { top: 50%; left: 0; width: 100%; height: 2px; }
-
-  /* Decorative plants */
-  .plant {
-    position: absolute;
-    bottom: 52%;
-    z-index: 8;
-  }
-
-  .plant-left { left: 5%; }
-  .plant-right { right: 8%; }
-
-  .plant-stem {
-    width: 3px; height: 30px;
-    background: #5A8040;
-    margin: 0 auto;
-  }
-
-  .plant-leaf {
-    width: 20px; height: 12px;
-    background: radial-gradient(ellipse, #6A9A50, #4A7030);
-    border-radius: 50%;
-    margin: -4px auto 0;
-  }
-
-  /* Gold accent line */
-  .gold-line {
-    position: absolute;
-    left: -1px; top: 15%; bottom: 15%;
-    width: 3px;
-    background: linear-gradient(180deg, transparent, var(--gold), transparent);
-    opacity: 0;
-    animation: fadeIn 1s 1.2s ease forwards;
-  }
-
-  /* ─── SCROLL INDICATOR ───────────────────────────── */
-  .scroll-hint {
-    position: absolute;
-    bottom: 3rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    opacity: 0;
-    animation: fadeIn 1s 1.5s ease forwards;
-  }
-
-  .scroll-hint span {
-    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--clay); opacity: 0.7;
-  }
-
-  .scroll-line {
-    width: 1px; height: 50px;
-    background: linear-gradient(180deg, var(--clay), transparent);
-    animation: scrollPulse 2s 1.5s infinite;
-  }
-
-  /* ─── STATS BAR ──────────────────────────────────── */
-  .stats-bar {
-    background: var(--charcoal);
-    padding: 2.5rem 6rem;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-
-  .stat {
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.6s;
-  }
-
-  .stat.visible { opacity: 1; }
-
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.8rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(250,247,242,0.5);
-    margin-top: 0.4rem;
-  }
-
-  .stat-divider {
-    width: 1px; height: 60px;
-    background: rgba(255,255,255,0.1);
-  }
-
-  /* ─── SERVICES ───────────────────────────────────── */
-  .section {
-    padding: 7rem 6rem;
-  }
-
-  .section-header {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    margin-bottom: 4rem;
-  }
-
-  .section-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.8rem;
-  }
+  .section-label span { display: inline-block; width: 30px; height: 1px; background: var(--gold); vertical-align: middle; margin-right: 0.6rem; }
 
   .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 3.5vw, 3.5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    color: var(--charcoal);
+    font-family: var(--heading); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+    letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; font-weight: 400; color: var(--gold-light); }
+
+  .section-desc { color: var(--cream-dim); max-width: 520px; font-size: 0.98rem; line-height: 1.75; }
+
+  /* ═══ PORTFOLIO ═══ */
+  .portfolio { padding: 7rem 4rem; background: var(--bg); }
+
+  .portfolio-header { margin-bottom: 4rem; }
+
+  .portfolio-grid {
+    display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto;
+    gap: 1.2rem;
   }
 
-  .section-title em { font-style: italic; color: var(--walnut); }
-
-  .section-link {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--clay);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-    white-space: nowrap;
-    margin-bottom: 0.8rem;
-    transition: color 0.3s;
-  }
-
-  .section-link:hover { color: var(--gold); }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .service-card {
-    background: var(--cream);
-    padding: 3rem 2.5rem;
-    position: relative;
-    overflow: hidden;
+  .portfolio-item {
+    overflow: hidden; position: relative; border-radius: 2px;
     cursor: pointer;
-    transition: background 0.4s;
-    group: true;
   }
+  .portfolio-item img { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s; }
+  .portfolio-item:hover img { transform: scale(1.05); }
 
-  .service-card::before {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-    transform-origin: left;
+  .portfolio-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(26,23,20,0.7) 100%);
+    opacity: 0; transition: opacity 0.4s; pointer-events: none;
   }
+  .portfolio-item:hover::after { opacity: 1; }
 
-  .service-card:hover { background: var(--mist); }
-  .service-card:hover::before { transform: scaleX(1); }
-
-  .service-icon {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    display: block;
+  .portfolio-caption {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.4rem;
+    z-index: 2; opacity: 0; transform: translateY(8px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .portfolio-item:hover .portfolio-caption { opacity: 1; transform: translateY(0); }
+  .portfolio-caption h3 { font-family: var(--heading); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.02em; color: #f5f0e8; }
+  .portfolio-caption p { font-size: 0.78rem; color: #c8c2b6; margin-top: 0.2rem; }
+
+  .p-1 { grid-column: 1 / 8; grid-row: 1; aspect-ratio: 16/10; }
+  .p-2 { grid-column: 8 / 13; grid-row: 1; aspect-ratio: 4/5; }
+  .p-3 { grid-column: 1 / 5; grid-row: 2; aspect-ratio: 3/4; }
+  .p-4 { grid-column: 5 / 9; grid-row: 2; aspect-ratio: 3/4; }
+  .p-5 { grid-column: 9 / 13; grid-row: 2; aspect-ratio: 3/4; }
+  .p-6 { grid-column: 1 / 13; grid-row: 3; aspect-ratio: 21/9; }
+
+  /* ═══ SERVICES ═══ */
+  .services { padding: 7rem 4rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .services-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1100px; margin: 0 auto; align-items: start; }
+
+  .services .section-title em { color: var(--gold-light); }
+
+  .service-item {
+    padding: 1.6rem 0; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 48px 1fr; gap: 1.2rem; align-items: start;
+    transition: all 0.3s;
+  }
+  .service-item:first-child { border-top: 1px solid var(--border); }
+  .service-item:hover { padding-left: 0.5rem; }
 
   .service-num {
-    position: absolute; top: 2rem; right: 2.5rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 300;
-    color: rgba(0,0,0,0.05);
-    line-height: 1;
+    font-family: var(--heading); font-size: 1.4rem; font-weight: 300;
+    color: var(--blue); line-height: 1.3;
   }
+  .service-item h3 { font-family: var(--heading); font-size: 1.25rem; font-weight: 500; margin-bottom: 0.3rem; letter-spacing: 0.01em; }
+  .service-item p { color: var(--cream-muted); font-size: 0.88rem; line-height: 1.6; }
 
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    color: var(--charcoal);
-    margin-bottom: 1rem;
-  }
+  /* ═══ PROCESS ═══ */
+  .process { padding: 7rem 4rem; background: var(--bg); }
 
-  .service-desc {
-    font-size: 0.88rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: rgba(28,28,26,0.65);
-  }
+  .process-header { text-align: center; margin-bottom: 4rem; }
+  .process-header .section-desc { margin-inline: auto; }
 
-  /* ─── PROCESS ─────────────────────────────────────── */
-  .process-section {
-    background: var(--charcoal);
-    padding: 7rem 6rem;
-  }
-
-  .process-section .section-title { color: var(--cream); }
-  .process-section .section-tag { color: var(--gold); }
-
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    margin-top: 4rem;
-    position: relative;
-  }
-
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; position: relative; }
   .process-steps::before {
-    content: '';
-    position: absolute;
-    top: 2.5rem; left: 12.5%; right: 12.5%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
-    opacity: 0.3;
+    content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent); opacity: 0.2;
   }
 
-  .step {
-    padding: 0 2rem;
-    text-align: center;
-  }
-
-  .step-circle {
-    width: 50px; height: 50px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
+  .process-step { text-align: center; }
+  .process-step-num {
+    width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--border-gold);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 2rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: var(--gold);
-    background: var(--charcoal);
-    position: relative; z-index: 1;
+    margin: 0 auto 1.2rem; font-family: var(--heading); font-size: 1.2rem;
+    color: var(--gold); background: var(--bg); position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+  .process-step:hover .process-step-num { background: var(--gold-glow); border-color: var(--gold); }
+  .process-step h3 { font-family: var(--heading); font-size: 1.15rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .process-step p { color: var(--cream-muted); font-size: 0.85rem; line-height: 1.6; }
+
+  /* ═══ QUOTE ═══ */
+  .quote-section {
+    padding: 5rem 4rem; background: var(--surface); border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); text-align: center;
+  }
+  .quote-section blockquote {
+    font-family: var(--heading); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 300;
+    font-style: italic; line-height: 1.4; max-width: 700px; margin: 0 auto 1.5rem;
+    color: var(--cream-dim);
+  }
+  .quote-section cite {
+    font-family: var(--body); font-style: normal; font-size: 0.82rem;
+    color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
   }
 
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: var(--cream);
-    margin-bottom: 1rem;
+  /* ═══ CTA / CONTACT ═══ */
+  .contact { padding: 7rem 4rem; background: var(--bg); }
+
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1100px; margin: 0 auto; align-items: start; }
+
+  .contact-info { }
+  .contact-info .section-desc { margin-bottom: 2.5rem; }
+
+  .contact-detail { margin-bottom: 1.5rem; }
+  .contact-detail-label { font-size: 0.72rem; color: var(--cream-muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; margin-bottom: 0.3rem; }
+  .contact-detail a, .contact-detail p { color: var(--cream-dim); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+  .contact-detail a:hover { color: var(--blue); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%; padding: 0.9rem 0; background: transparent;
+    border: none; border-bottom: 1px solid var(--border);
+    color: var(--cream); font-family: var(--body); font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s;
   }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: var(--blue); box-shadow: 0 2px 0 0 var(--blue-glow); }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--cream-muted); }
+  .contact-form textarea { resize: vertical; min-height: 100px; }
 
-  .step-desc {
-    font-size: 0.82rem;
-    font-weight: 300;
-    line-height: 1.75;
-    color: rgba(245,240,232,0.5);
+  .contact-form button {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 0.8rem;
+    padding: 1rem 2.2rem; background: var(--gold); color: #fff;
+    border: none; font-family: var(--body); font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.4s; margin-top: 0.5rem;
   }
+  .contact-form button:hover { background: var(--blue); letter-spacing: 0.14em; }
 
-  /* ─── MATERIALS ───────────────────────────────────── */
-  .materials-section {
-    padding: 7rem 0;
-    background: var(--warm-white);
-    overflow: hidden;
-  }
-
-  .materials-inner {
-    padding: 0 6rem;
-  }
-
-  .materials-scroll {
-    display: flex; gap: 1.5rem;
-    margin-top: 3rem;
-    padding: 0 6rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .materials-scroll::-webkit-scrollbar { display: none; }
-
-  .material-tile {
-    min-width: 220px;
-    padding: 2.5rem 2rem;
-    border: 1px solid var(--mist);
-    background: var(--cream);
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: default;
-  }
-
-  .material-tile:hover {
-    border-color: var(--gold);
-    transform: translateY(-4px);
-  }
-
-  .material-swatch {
-    width: 100%; height: 60px;
-    margin-bottom: 1.5rem;
-    border-radius: 2px;
-  }
-
-  .sw-oak    { background: linear-gradient(135deg, #C8A870 20%, #B89060 50%, #C8A870 80%); }
-  .sw-walnut { background: linear-gradient(135deg, #5C3D2E 20%, #4A2E1E 50%, #5C3D2E 80%); }
-  .sw-white  { background: linear-gradient(135deg, #F5F0E8 20%, #EAE4D8 50%, #F5F0E8 80%); border: 1px solid #E0DAD0; }
-  .sw-grey   { background: linear-gradient(135deg, #9A9490 20%, #888280 50%, #9A9490 80%); }
-  .sw-black  { background: linear-gradient(135deg, #2A2A28 20%, #1C1C1A 50%, #2A2A28 80%); }
-  .sw-lacquer{ background: linear-gradient(135deg, #4A6B5A 20%, #3A5B4A 50%, #4A6B5A 80%); }
-
-  .material-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--charcoal);
-    margin-bottom: 0.4rem;
-  }
-
-  .material-desc {
-    font-size: 0.78rem;
-    font-weight: 300;
-    color: rgba(28,28,26,0.5);
-    letter-spacing: 0.05em;
-  }
-
-  /* ─── GALLERY SHOWCASE ────────────────────────────── */
-  .showcase-section {
-    padding: 7rem 6rem;
-    background: var(--cream);
-  }
-
-  .showcase-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 300px 300px;
-    gap: 3px;
-    margin-top: 3rem;
-  }
-
-  .showcase-item {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .showcase-item:first-child {
-    grid-row: 1 / 3;
-  }
-
-  .showcase-bg {
-    width: 100%; height: 100%;
-    transition: transform 0.6s ease;
-  }
-
-  .showcase-item:hover .showcase-bg { transform: scale(1.04); }
-
-  .bg-kitchen1 {
-    background: linear-gradient(160deg, #4A3320 0%, #2E1F0F 100%);
-    display: flex; align-items: flex-end; padding: 2rem;
-    position: relative; overflow: hidden;
-  }
-
-  .bg-kitchen1::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg, transparent, transparent 10px,
-      rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 11px
-    );
-  }
-
-  .bg-living {
-    background: linear-gradient(160deg, #C5A880 0%, #8A6A40 100%);
-    display: flex; align-items: flex-end; padding: 1.5rem;
-  }
-
-  .bg-bedroom {
-    background: linear-gradient(160deg, #7A8A90 0%, #4A5A60 100%);
-    display: flex; align-items: flex-end; padding: 1.5rem;
-  }
-
-  .bg-wardrobe {
-    background: linear-gradient(160deg, #3A2A1A 0%, #2A1A0A 100%);
-    display: flex; align-items: flex-end; padding: 1.5rem;
-  }
-
-  .bg-bathroom {
-    background: linear-gradient(160deg, #D0C8BE 0%, #A8A09A 100%);
-    display: flex; align-items: flex-end; padding: 1.5rem;
-  }
-
-  .showcase-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 300;
-    color: rgba(250,247,242,0.9);
-    letter-spacing: 0.05em;
-    position: relative; z-index: 2;
-  }
-
-  .showcase-label-dark { color: rgba(28,28,26,0.8); }
-
-  /* Interior CSS art for showcase */
-  .kitchen-art {
-    position: absolute;
-    inset: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .kitchen-art-inner {
-    width: 70%; height: 60%;
-    position: relative;
-  }
-
-  .ka-counter {
-    position: absolute;
-    bottom: 0; left: 0; right: 0; height: 40%;
-    background: linear-gradient(180deg, #A8885C, #8A6A40);
-    border-top: 4px solid #D0C0A0;
-  }
-
-  .ka-upper-left {
-    position: absolute;
-    top: 0; left: 0; width: 30%; height: 55%;
-    background: linear-gradient(180deg, #C5A880, #A8885C);
-    border: 1px solid #8A6A40;
-  }
-
-  .ka-upper-right {
-    position: absolute;
-    top: 0; right: 0; width: 30%; height: 55%;
-    background: linear-gradient(180deg, #C5A880, #A8885C);
-    border: 1px solid #8A6A40;
-  }
-
-  .ka-window {
-    position: absolute;
-    top: 0; left: 32%; right: 32%; height: 55%;
-    background: linear-gradient(160deg, #6A8090, #4A6070);
-    border: 2px solid #5A7080;
-  }
-
-  /* ─── TESTIMONIALS ────────────────────────────────── */
-  .testimonials-section {
-    padding: 7rem 6rem;
-    background: var(--warm-white);
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .testimonial-card {
-    padding: 2.5rem;
-    border: 1px solid var(--mist);
-    position: relative;
-    background: var(--warm-white);
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-
-  .testimonial-card:hover {
-    border-color: var(--gold);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
-  }
-
-  .quote-mark {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 5rem;
-    line-height: 0.7;
-    color: var(--gold);
-    opacity: 0.4;
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  .testimonial-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.7;
-    color: var(--charcoal);
-    margin-bottom: 2rem;
-  }
-
-  .testimonial-author {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--clay);
-  }
-
-  .testimonial-location {
-    font-size: 0.72rem;
-    color: rgba(28,28,26,0.4);
-    margin-top: 0.2rem;
-    letter-spacing: 0.1em;
-  }
-
-  .stars {
-    color: var(--gold);
-    font-size: 0.8rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.2em;
-  }
-
-  /* ─── CONTACT ─────────────────────────────────────── */
-  .contact-section {
-    background: var(--charcoal);
-    padding: 7rem 6rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: start;
-  }
-
-  .contact-left .section-title { color: var(--cream); }
-
-  .contact-desc {
-    font-size: 0.9rem;
-    font-weight: 300;
-    line-height: 1.8;
-    color: rgba(245,240,232,0.5);
-    margin-top: 1.5rem;
-    margin-bottom: 3rem;
-    max-width: 400px;
-  }
-
-  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
-
-  .contact-item {
-    display: flex; gap: 1.5rem; align-items: flex-start;
-  }
-
-  .contact-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    border: 1px solid rgba(201,168,76,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-  }
-
-  .contact-item-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.3rem;
-  }
-
-  .contact-item-value {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: var(--cream);
-  }
-
-  /* Form */
-  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-
-  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
-
-  .form-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.4);
-  }
-
-  .form-input, .form-textarea, .form-select {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: var(--cream);
-    padding: 1rem 1.2rem;
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 300;
-    outline: none;
-    transition: border-color 0.3s;
-    width: 100%;
-  }
-
-  .form-select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1.2rem center;
-    padding-right: 3rem;
-  }
-
-  .form-select option { background: var(--charcoal); }
-
-  .form-input:focus, .form-textarea:focus, .form-select:focus {
-    border-color: var(--gold);
-  }
-
-  .form-textarea { resize: vertical; min-height: 100px; }
-
-  .form-submit {
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--charcoal);
-    background: var(--gold);
-    padding: 1.2rem 3rem;
-    border: none; cursor: pointer;
-    width: 100%;
-    transition: background 0.3s;
-  }
-
-  .form-submit:hover { background: #D9B85C; }
-
-  /* ─── FOOTER ──────────────────────────────────────── */
+  /* ═══ FOOTER ═══ */
   footer {
-    background: #161614;
-    padding: 3rem 6rem;
+    padding: 3rem 4rem; border-top: 1px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap; gap: 1rem;
   }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    color: var(--cream);
-    opacity: 0.5;
-    text-decoration: none;
+  .footer-brand {
+    font-family: var(--heading); font-size: 1.1rem; font-weight: 300;
+    letter-spacing: 0.06em; text-transform: uppercase;
   }
+  .footer-brand strong { font-weight: 600; color: var(--gold); }
+  .footer-copy { font-size: 0.75rem; color: var(--cream-muted); }
 
-  .footer-logo span { color: var(--gold); font-style: italic; }
+  /* ═══ ANIMATIONS ═══ */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  .footer-copy {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    color: rgba(245,240,232,0.25);
-  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.08s; }
+  .reveal-d2 { transition-delay: 0.16s; }
+  .reveal-d3 { transition-delay: 0.24s; }
+  .reveal-d4 { transition-delay: 0.32s; }
 
-  .footer-links {
-    display: flex; gap: 2rem; list-style: none;
-  }
-
-  .footer-links a {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.3);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .footer-links a:hover { color: var(--gold); }
-
-  /* ─── ANIMATIONS ─────────────────────────────────── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.1); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ─── RESPONSIVE ─────────────────────────────────── */
+  /* ═══ RESPONSIVE ═══ */
   @media (max-width: 1024px) {
-    nav { padding: 1.5rem 2rem; }
-    .nav-links { gap: 1.5rem; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: 5rem 2rem 3rem; }
-    .hero-right { height: 60vw; }
-    .stats-bar { padding: 2rem; flex-wrap: wrap; gap: 1.5rem; }
-    .stat-divider { display: none; }
-    .section, .process-section, .showcase-section, .testimonials-section, .contact-section { padding: 4rem 2rem; }
-    .services-grid, .process-steps, .testimonials-grid { grid-template-columns: 1fr; }
-    .contact-section { grid-template-columns: 1fr; gap: 3rem; }
-    .showcase-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-    .showcase-item:first-child { grid-row: auto; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
-    .footer-links { flex-wrap: wrap; justify-content: center; }
+    nav { padding: 1rem 2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .hero-content { padding: 0 2rem 4rem; }
+    .about-strip { padding: 3rem 2rem; gap: 2rem; }
+    .portfolio { padding: 5rem 2rem; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .p-1, .p-2, .p-3, .p-4, .p-5, .p-6 { grid-column: auto; grid-row: auto; aspect-ratio: 4/3; }
+    .services { padding: 5rem 2rem; }
+    .services-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .process { padding: 5rem 2rem; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .process-steps::before { display: none; }
+    .contact { padding: 5rem 2rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .quote-section { padding: 4rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .about-strip { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
-    .materials-inner { padding: 0 2rem; }
-    .materials-scroll { padding: 0 2rem; }
+    .hero h1 { font-size: 2.5rem; }
+    .hero-content { padding: 0 1.5rem 3rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
+<!-- ═══ NAV ═══ -->
 <nav>
-  <a href="#" class="logo">La Doma <span>Art</span></a>
+  <a href="#" class="nav-logo">La <strong>DoMa</strong> Art</a>
   <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#usluge">Usluge</a></li>
     <li><a href="#proces">Proces</a></li>
-    <li><a href="#materijali">Materijali</a></li>
-    <li><a href="#radovi">Radovi</a></li>
     <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Meni"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="gold-line"></div>
-    <p class="hero-tag">Zagreb · Po mjeri · Od srca</p>
-    <h1 class="hero-title">
-      Namještaj koji<br>
-      <em>priča vašu priču</em>
-    </h1>
-    <p class="hero-sub">
-      Svaki prostor zaslužuje namještaj napravljen upravo za njega.
-      U <strong>La Doma Art</strong> izrađujemo kuhinje, ormarne sustave i cjelokupne
-      interijere — od prve skice do montaže u vašem domu.
-    </p>
-    <div class="hero-actions">
-      <a href="#kontakt" class="btn-primary">Zatražite ponudu</a>
-      <a href="#radovi" class="btn-secondary">Pogledajte radove</a>
-    </div>
-  </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#portfolio" class="mob-link">Portfolio</a>
+  <a href="#usluge" class="mob-link">Usluge</a>
+  <a href="#proces" class="mob-link">Proces</a>
+  <a href="#kontakt" class="mob-link">Kontakt</a>
+</div>
 
-  <div class="hero-right">
-    <div class="hero-visual">
-      <div class="kitchen-scene">
-        <div class="window-bg"></div>
-        <div class="cab cab-upper-left">
-          <div class="handle" style="bottom:28%;left:50%;transform:translateX(-50%)"></div>
-        </div>
-        <div class="cab cab-upper-right">
-          <div class="handle" style="bottom:28%;left:50%;transform:translateX(-50%)"></div>
-        </div>
-        <div class="backsplash"></div>
-        <div class="countertop"></div>
-        <div class="faucet"></div>
-        <div class="sink"></div>
-        <div class="cab cab-lower-left">
-          <div class="handle" style="top:35%;left:50%;transform:translateX(-50%)"></div>
-        </div>
-        <div class="cab cab-lower-right">
-          <div class="handle" style="top:35%;left:50%;transform:translateX(-50%)"></div>
-        </div>
-        <div class="plant plant-left">
-          <div class="plant-leaf"></div>
-          <div class="plant-stem"></div>
-        </div>
-        <div class="plant plant-right">
-          <div class="plant-leaf"></div>
-          <div class="plant-stem"></div>
-        </div>
-      </div>
-    </div>
-    <div class="scroll-hint" style="position:absolute">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-image">
+    <img src="imgkitchen-dark-2.jpg" alt="La DoMa Art kuhinja">
+  </div>
+  <div class="hero-content">
+    <div class="hero-label"><span></span>Izrada namještaja po mjeri</div>
+    <h1>Prostor koji <em>priča vašu priču</em></h1>
+    <p class="hero-desc">Dizajniramo i izrađujemo kuhinje i namještaj po mjeri — od ideje do gotovog prostora. Svaki detalj oblikujemo prema vašim potrebama i viziji.</p>
+    <a href="#kontakt" class="hero-cta">Zatražite besplatnu konzultaciju <span class="arrow">→</span></a>
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar" id="stats">
-  <div class="stat">
-    <div class="stat-num" data-target="350">0</div>
-    <div class="stat-label">Realiziranih projekata</div>
+<!-- ═══ ABOUT STRIP ═══ -->
+<div class="about-strip">
+  <div class="about-item reveal">
+    <div class="about-num">150+</div>
+    <div class="about-label">Realiziranih projekata</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-num" data-target="15">0</div>
-    <div class="stat-label">Godina iskustva</div>
+  <div class="about-item reveal reveal-d1">
+    <div class="about-num">100%</div>
+    <div class="about-label">Po mjeri</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-num" data-target="100">0</div>
-    <div class="stat-label">% zadovoljnih klijenata</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-num" data-target="30">0</div>
-    <div class="stat-label">Dana prosječna izrada</div>
+  <div class="about-item reveal reveal-d2">
+    <div class="about-num">10+</div>
+    <div class="about-label">Godina iskustva</div>
   </div>
 </div>
 
-<!-- SERVICES -->
-<section class="section" id="usluge">
-  <div class="section-header">
-    <div>
-      <p class="section-tag">Naše usluge</p>
-      <h2 class="section-title">Sve za vaš <em>savršen dom</em></h2>
-    </div>
-    <a href="#kontakt" class="section-link">Razgovarajmo →</a>
+<!-- ═══ PORTFOLIO ═══ -->
+<section id="portfolio" class="portfolio">
+  <div class="portfolio-header">
+    <div class="section-label reveal"><span></span>Portfolio</div>
+    <h2 class="section-title reveal">Odabrani <em>projekti</em></h2>
+    <p class="section-desc reveal">Svaki prostor ima svoju priču. Pogledajte kako pretvaramo viziju u stvarnost.</p>
   </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <span class="service-num">01</span>
-      <span class="service-icon">🍳</span>
-      <h3 class="service-name">Kuhinje po mjeri</h3>
-      <p class="service-desc">Od klasičnih do modernih kuhinja — svaka je prilagođena vašem prostoru, stilu i potrebama. Koristimo certificirane materijale vrhunske kvalitete s dugim vijekom trajanja.</p>
+
+  <div class="portfolio-grid">
+    <div class="portfolio-item p-1 reveal">
+      <img src="imgkitchen-dark-2.jpg" alt="Moderna tamna kuhinja" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Kuhinja — Dark Elegance</h3>
+        <p>Mramor, crni mat, lamele</p>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <span class="service-num">02</span>
-      <span class="service-icon">🚪</span>
-      <h3 class="service-name">Ormari i garderoberi</h3>
-      <p class="service-desc">Ugradbeni ormari koji maksimiziraju svaki centimetar vašeg prostora. Klizna ili klasična vrata, s ogledalom ili bez — isključivo vaš izbor.</p>
+    <div class="portfolio-item p-2 reveal reveal-d1">
+      <img src="imgbedroom.jpg" alt="Moderna spavaća soba" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Spavaća soba</h3>
+        <p>Sivi tonovi, LED rasvjeta</p>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <span class="service-num">03</span>
-      <span class="service-icon">🛋️</span>
-      <h3 class="service-name">Namještaj za dnevni boravak</h3>
-      <p class="service-desc">TV ormari, police, police za knjige, klupe i ostali namještaj koji čini vaš dnevni boravak udobnim, funkcionalnim i estetski upečatljivim.</p>
+    <div class="portfolio-item p-3 reveal">
+      <img src="imgbathroom.jpg" alt="Kupaonica s mramorom" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Kupaonica</h3>
+        <p>Mramor, vessel umivaonik</p>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <span class="service-num">04</span>
-      <span class="service-icon">🛏️</span>
-      <h3 class="service-name">Spavaće sobe</h3>
-      <p class="service-desc">Kreveti, noćni ormarići, toaletni stolovi i kompletno opremanje spavaće sobe po vašem ukusu. Vaš san počinje s pravim namještajem.</p>
+    <div class="portfolio-item p-4 reveal reveal-d1">
+      <img src="imgentryway.jpg" alt="Predsoblje" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Predsoblje</h3>
+        <p>Lamele, hrast, tamni ormar</p>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <span class="service-num">05</span>
-      <span class="service-icon">🏢</span>
-      <h3 class="service-name">Poslovni prostori</h3>
-      <p class="service-desc">Uredski namještaj, recepcijski pultovi, konferencijske sobe i specijalizirani prostori — opremamo vaš poslovni prostor s jednakom pažnjom i preciznošću.</p>
+    <div class="portfolio-item p-5 reveal reveal-d2">
+      <img src="imgkitchen-dark-1.jpg" alt="Kuhinja s otokom" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Kuhinja — Otok</h3>
+        <p>Mramorni otok, lamele</p>
+      </div>
     </div>
-    <div class="service-card reveal">
-      <span class="service-num">06</span>
-      <span class="service-icon">🔧</span>
-      <h3 class="service-name">Montaža i savjetovanje</h3>
-      <p class="service-desc">Naš tim iskusnih majstora brine o profesionalnoj montaži svakog komada. Pružamo i besplatno savjetovanje o odabiru materijala i dizajna.</p>
+    <div class="portfolio-item p-6 reveal">
+      <img src="imgkitchen-white.jpg" alt="Bijela moderna kuhinja" loading="lazy">
+      <div class="portfolio-caption">
+        <h3>Kuhinja — Light</h3>
+        <p>Bijeli sjaj, drvo, espresso bar</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="process-section" id="proces">
-  <p class="section-tag">Naš proces</p>
-  <h2 class="section-title" style="color:var(--cream)">Od ideje do <em>stvarnosti</em></h2>
+<!-- ═══ SERVICES ═══ -->
+<section id="usluge" class="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <div class="section-label"><span></span>Usluge</div>
+      <h2 class="section-title">Kompletna izrada <em>od A do Ž</em></h2>
+      <p class="section-desc">Od prvog mjerenja do završne montaže — brinemo o svakom koraku. Vi uživate u rezultatu.</p>
+    </div>
+
+    <div class="services-list">
+      <div class="service-item reveal">
+        <div class="service-num">01</div>
+        <div>
+          <h3>Kuhinje po mjeri</h3>
+          <p>Moderni ili klasični dizajn, optimizirani za vaš prostor. Premium materijali i ugradbeni aparati.</p>
+        </div>
+      </div>
+      <div class="service-item reveal reveal-d1">
+        <div class="service-num">02</div>
+        <div>
+          <h3>Ormari i garderoberi</h3>
+          <p>Rješenja za pohranu koja maksimalno koriste svaki centimetar prostora.</p>
+        </div>
+      </div>
+      <div class="service-item reveal reveal-d2">
+        <div class="service-num">03</div>
+        <div>
+          <h3>Kupaonice</h3>
+          <p>Namještaj za kupaonice — umivaonici, ormarići, police. Prilagođeno vašim dimenzijama.</p>
+        </div>
+      </div>
+      <div class="service-item reveal reveal-d3">
+        <div class="service-num">04</div>
+        <div>
+          <h3>Predsoblja i hodnici</h3>
+          <p>Funkcionalni ulazni prostori s garderobama, klupama i lamelama.</p>
+        </div>
+      </div>
+      <div class="service-item reveal reveal-d4">
+        <div class="service-num">05</div>
+        <div>
+          <h3>Dnevni boravci i police</h3>
+          <p>TV stijenke, police, vitrine — sve prema vašim željama i prostoru.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+<section id="proces" class="process">
+  <div class="process-header">
+    <div class="section-label reveal"><span></span>Proces</div>
+    <h2 class="section-title reveal">Kako <em>radimo</em></h2>
+    <p class="section-desc reveal">Transparentan proces od prvog kontakta do gotovog namještaja.</p>
+  </div>
+
   <div class="process-steps">
-    <div class="step reveal">
-      <div class="step-circle">1</div>
-      <h3 class="step-title">Konzultacija</h3>
-      <p class="step-desc">Dolazimo k vama, izmjerimo prostor, razgovaramo o vašim željama i budžetu. Bez obveza, bez troškova.</p>
+    <div class="process-step reveal">
+      <div class="process-step-num">01</div>
+      <h3>Konzultacija</h3>
+      <p>Dolazimo k vama, uzimamo mjere i slušamo vaše želje.</p>
     </div>
-    <div class="step reveal">
-      <div class="step-circle">2</div>
-      <h3 class="step-title">Dizajn & Ponuda</h3>
-      <p class="step-desc">Izrađujemo 3D vizualizaciju i detaljan troškovnik. Sve pregledavate prije nego što potvrdite narudžbu.</p>
+    <div class="process-step reveal reveal-d1">
+      <div class="process-step-num">02</div>
+      <h3>Dizajn</h3>
+      <p>Izrađujemo 3D vizualizaciju i dogovaramo materijale.</p>
     </div>
-    <div class="step reveal">
-      <div class="step-circle">3</div>
-      <h3 class="step-title">Izrada</h3>
-      <p class="step-desc">Vaš namještaj izrađujemo u našoj radionici u Zagrebu uz strogu kontrolu kvalitete u svakom koraku.</p>
+    <div class="process-step reveal reveal-d2">
+      <div class="process-step-num">03</div>
+      <h3>Izrada</h3>
+      <p>Precizna izrada u našoj radionici s pažnjom na svaki detalj.</p>
     </div>
-    <div class="step reveal">
-      <div class="step-circle">4</div>
-      <h3 class="step-title">Montaža</h3>
-      <p class="step-desc">Naš tim obavlja preciznu montažu u dogovorenom terminu, s minimalnim neredom u vašem domu.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MATERIALS -->
-<section class="materials-section" id="materijali">
-  <div class="materials-inner">
-    <p class="section-tag">Materijali</p>
-    <h2 class="section-title">Odabiremo samo <em>najbolje</em></h2>
-  </div>
-  <div class="materials-scroll">
-    <div class="material-tile">
-      <div class="material-swatch sw-oak"></div>
-      <div class="material-name">Hrast</div>
-      <div class="material-desc">Masivno drvo · Prirodno furnir</div>
-    </div>
-    <div class="material-tile">
-      <div class="material-swatch sw-walnut"></div>
-      <div class="material-name">Orah</div>
-      <div class="material-desc">Premium furnir · Topli toni</div>
-    </div>
-    <div class="material-tile">
-      <div class="material-swatch sw-white"></div>
-      <div class="material-name">Bijeli mat</div>
-      <div class="material-desc">Lakirana MDF · Bez sjaja</div>
-    </div>
-    <div class="material-tile">
-      <div class="material-swatch sw-grey"></div>
-      <div class="material-name">Sivi beton</div>
-      <div class="material-desc">HPL dekor · Industrijski look</div>
-    </div>
-    <div class="material-tile">
-      <div class="material-swatch sw-black"></div>
-      <div class="material-name">Crni mat</div>
-      <div class="material-desc">Elegantno · Moderno</div>
-    </div>
-    <div class="material-tile">
-      <div class="material-swatch sw-lacquer"></div>
-      <div class="material-name">Zeleni lak</div>
-      <div class="material-desc">Boja po željama · Puni lak</div>
+    <div class="process-step reveal reveal-d3">
+      <div class="process-step-num">04</div>
+      <h3>Montaža</h3>
+      <p>Profesionalna montaža i čišćenje — uživate odmah.</p>
     </div>
   </div>
 </section>
 
-<!-- SHOWCASE -->
-<section class="showcase-section" id="radovi">
-  <div class="section-header">
-    <div>
-      <p class="section-tag">Naši radovi</p>
-      <h2 class="section-title">Svaki projekt, <em>jedinstvena priča</em></h2>
-    </div>
-  </div>
-  <div class="showcase-grid">
-    <div class="showcase-item">
-      <div class="showcase-bg bg-kitchen1" style="height:100%">
-        <div class="kitchen-art">
-          <div class="kitchen-art-inner">
-            <div class="ka-window"></div>
-            <div class="ka-upper-left"></div>
-            <div class="ka-upper-right"></div>
-            <div class="ka-counter"></div>
-          </div>
-        </div>
-        <div class="showcase-label">Moderna kuhinja · Gornji grad</div>
-      </div>
-    </div>
-    <div class="showcase-item">
-      <div class="showcase-bg bg-living">
-        <div class="showcase-label">Dnevni boravak</div>
-      </div>
-    </div>
-    <div class="showcase-item">
-      <div class="showcase-bg bg-bedroom">
-        <div class="showcase-label">Spavaća soba</div>
-      </div>
-    </div>
-    <div class="showcase-item">
-      <div class="showcase-bg bg-wardrobe">
-        <div class="showcase-label">Garderober</div>
-      </div>
-    </div>
-    <div class="showcase-item">
-      <div class="showcase-bg bg-bathroom">
-        <div class="showcase-label showcase-label-dark">Kupaonica</div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═══ QUOTE ═══ -->
+<div class="quote-section reveal">
+  <blockquote>"Kvaliteta se vidi u detaljima koje drugi ne primijete."</blockquote>
+  <cite>— La DoMa Art filozofija</cite>
+</div>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="section-header">
-    <div>
-      <p class="section-tag">Klijenti o nama</p>
-      <h2 class="section-title">Što kažu oni koji <em>žive s nama</em></h2>
-    </div>
-  </div>
-  <div class="testimonials-grid">
-    <div class="testimonial-card reveal">
-      <span class="quote-mark">"</span>
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Kuhinja je izašla točno onako kako smo zamislili — čak i bolje. Ekipa je bila izuzetno uredna i profesionalna, završili su u roku i bez ikakvih stresova.</p>
-      <div class="testimonial-author">Martina & Luka K.</div>
-      <div class="testimonial-location">Maksimir, Zagreb</div>
-    </div>
-    <div class="testimonial-card reveal">
-      <span class="quote-mark">"</span>
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Garderober je pretvorio naš mali hodnik u pravi organizirani prostor. Svaka polica je savršeno iskoristila prostor koji smo imali. Preporučujem bez razmišljanja.</p>
-      <div class="testimonial-author">Ivan P.</div>
-      <div class="testimonial-location">Trešnjevka, Zagreb</div>
-    </div>
-    <div class="testimonial-card reveal">
-      <span class="quote-mark">"</span>
-      <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Opremili smo cijeli ured za naš tim od 20 ljudi. Kvaliteta izrade i preciznost montaže su bili vrhunski. Svi zaposlenici su oduševljeni novim prostorom.</p>
-      <div class="testimonial-author">Ana Š., direktorica</div>
-      <div class="testimonial-location">Poslovni centar, Zagreb</div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="kontakt">
-  <div class="contact-left">
-    <p class="section-tag">Kontakt</p>
-    <h2 class="section-title" style="color:var(--cream)">Razgovarajmo o<br><em>vašem projektu</em></h2>
-    <p class="contact-desc">Besplatna konzultacija i izmjera u vašem domu. Kontaktirajte nas i dogovorite termin koji vama odgovara.</p>
+<!-- ═══ CONTACT ═══ -->
+<section id="kontakt" class="contact">
+  <div class="contact-inner">
     <div class="contact-info">
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-item-label">Adresa</div>
-          <div class="contact-item-value">Zagreb, Hrvatska</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <div>
-          <div class="contact-item-label">Telefon</div>
-          <div class="contact-item-value">+385 (0)1 XXX XXXX</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-item-label">Email</div>
-          <div class="contact-item-value">info@ladomaart.hr</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">🕐</div>
-        <div>
-          <div class="contact-item-label">Radno vrijeme</div>
-          <div class="contact-item-value">Pon–Pet: 8:00 – 17:00</div>
-        </div>
-      </div>
-    </div>
-  </div>
+      <div class="section-label reveal"><span></span>Kontakt</div>
+      <h2 class="section-title reveal">Započnimo <em>suradnju</em></h2>
+      <p class="section-desc reveal">Opišite nam svoj projekt ili nas kontaktirajte za besplatnu konzultaciju i mjerenje. Bez obveza.</p>
 
-  <div class="contact-right">
-    <div class="contact-form">
-      <div class="form-row">
-        <div class="form-field">
-          <label class="form-label">Ime i prezime</label>
-          <input class="form-input" type="text" placeholder="Vaše ime">
-        </div>
-        <div class="form-field">
-          <label class="form-label">Telefon</label>
-          <input class="form-input" type="tel" placeholder="+385">
-        </div>
+      <div class="contact-detail reveal">
+        <div class="contact-detail-label">Telefon</div>
+        <a href="tel:+385996406430">099 640 6430</a>
       </div>
-      <div class="form-field">
-        <label class="form-label">Email adresa</label>
-        <input class="form-input" type="email" placeholder="vas@email.hr">
+      <div class="contact-detail reveal">
+        <div class="contact-detail-label">Email</div>
+        <a href="/cdn-cgi/l/email-protection#c3aeacadb7a2b9a2edb9a2a4b1a6a183a4aea2aaafeda0acae"><span class="__cf_email__" data-cfemail="c7aaa8a9b3a6bda6e9bda6a0b5a2a587a0aaa6aeabe9a4a8aa">[email&#160;protected]</span></a>
       </div>
-      <div class="form-field">
-        <label class="form-label">Vrsta projekta</label>
-        <select class="form-select form-input">
-          <option value="" disabled selected>Odaberite uslugu</option>
-          <option>Kuhinja po mjeri</option>
-          <option>Ormari i garderoberi</option>
-          <option>Dnevni boravak</option>
-          <option>Spavaća soba</option>
-          <option>Poslovni prostor</option>
-          <option>Ostalo</option>
-        </select>
+      <div class="contact-detail reveal">
+        <div class="contact-detail-label">Lokacija</div>
+        <p>Zagreb, Hrvatska</p>
       </div>
-      <div class="form-field">
-        <label class="form-label">Poruka</label>
-        <textarea class="form-textarea" placeholder="Opišite ukratko vaš projekt, lokaciju i okvirni rok..."></textarea>
-      </div>
-      <button class="form-submit" onclick="handleSubmit(event)">Pošaljite upit →</button>
     </div>
+
+    <form class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST" autocomplete="off">
+      <input type="hidden" name="access_key" value="TVOJ_ACCESS_KEY">
+      <input type="hidden" name="subject" value="Novi upit — La DoMa Art">
+      <input type="hidden" name="from_name" value="La DoMa Art Web">
+      <input type="checkbox" name="botcheck" style="display:none">
+      <input type="hidden" name="redirect" value="https://ladomaart.hr/hvala.html">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Ime i prezime" required>
+        <input type="tel" name="phone" placeholder="Telefon">
+      </div>
+      <input type="email" name="email" placeholder="Email adresa" required>
+      <textarea name="message" placeholder="Opišite nam svoj projekt — vrsta namještaja, prostor, rokovi..." rows="4" required></textarea>
+      <button type="submit">Pošaljite upit <span>→</span></button>
+    </form>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <a href="#" class="footer-logo">La Doma <span>Art</span></a>
-  <p class="footer-copy">© 2024 La Doma Art d.o.o. · Zagreb · Sva prava pridržana</p>
-  <ul class="footer-links">
-    <li><a href="#">Instagram</a></li>
-    <li><a href="#">Facebook</a></li>
-    <li><a href="#usluge">Usluge</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
+  <div class="footer-brand">La <strong>DoMa</strong> Art</div>
+  <div class="footer-copy">© 2025 La DoMa Art — Izrada i montaža namještaja po mjeri</div>
 </footer>
 
-<script>
-  // Intersection Observer for reveal animations
-  const reveals = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        revealObserver.unobserve(entry.target);
-      }
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('mobileMenu').classList.remove('active');
+      document.getElementById('hamburger').classList.remove('active');
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => revealObserver.observe(el));
+  });
 
-  // Counter animation
-  const statsEl = document.getElementById('stats');
-  let counted = false;
-  const countObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting && !counted) {
-      counted = true;
-      document.querySelectorAll('.stat').forEach((stat, i) => {
-        stat.style.transitionDelay = `${i * 0.15}s`;
-        stat.classList.add('visible');
-        const numEl = stat.querySelector('.stat-num');
-        const target = parseInt(numEl.dataset.target);
-        let current = 0;
-        const increment = target / 60;
-        const timer = setInterval(() => {
-          current = Math.min(current + increment, target);
-          numEl.textContent = Math.round(current);
-          if (current >= target) {
-            clearInterval(timer);
-            numEl.textContent = target + (target === 100 ? '' : '+');
-          }
-        }, 25);
-      });
-    }
-  }, { threshold: 0.5 });
-  countObserver.observe(statsEl);
+  // Hamburger
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('hamburger').classList.toggle('active');
+    document.getElementById('mobileMenu').classList.toggle('active');
+  });
 
-  // Form submit
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target;
-    btn.textContent = 'Hvala! Javit ćemo se uskoro ✓';
-    btn.style.background = '#6A9A50';
-    btn.style.color = 'white';
-    setTimeout(() => {
-      btn.textContent = 'Pošaljite upit →';
-      btn.style.background = '';
-      btn.style.color = '';
-    }, 4000);
-  }
-
-  // Smooth nav background on scroll
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.08)';
-    } else {
-      nav.style.boxShadow = 'none';
-    }
+  // Clear form on back
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) document.querySelector('.contact-form')?.reset();
   });
 </script>
 </body>
