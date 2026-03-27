@@ -88,10 +88,8 @@
   .portfolio-item { overflow: hidden; position: relative; border-radius: 2px; cursor: pointer; }
   .portfolio-item img { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s; }
   .portfolio-item:hover img { transform: scale(1.05); }
-  .portfolio-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(26,23,20,0.7) 100%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
-  .portfolio-item:hover::after { opacity: 1; }
-  .portfolio-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.4rem; z-index: 2; opacity: 0; transform: translateY(8px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-  .portfolio-item:hover .portfolio-caption { opacity: 1; transform: translateY(0); }
+  .portfolio-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(26,23,20,0.7) 100%); opacity: 1; pointer-events: none; }
+  .portfolio-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.4rem; z-index: 2; opacity: 1; }
   .portfolio-caption h3 { font-family: var(--heading); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.02em; color: #f5f0e8; }
   .portfolio-caption p { font-size: 0.78rem; color: #c8c2b6; margin-top: 0.2rem; }
   /* Plus ikona kao hint */
@@ -338,7 +336,7 @@
       <h2 class="section-title reveal">Započnimo <em>suradnju</em></h2>
       <p class="section-desc reveal">Opišite nam svoj projekt ili nas kontaktirajte za besplatnu konzultaciju i mjerenje. Bez obveza.</p>
       <div class="contact-detail reveal"><div class="contact-detail-label">Telefon</div><a href="tel:+385996406430">099 640 6430</a></div>
-      <div class="contact-detail reveal"><div class="contact-detail-label">Email</div><a href="mailto:info@la-doma.art">info@la-doma.art</a></div>
+      <div class="contact-detail reveal"><div class="contact-detail-label">Email</div><a href="/cdn-cgi/l/email-protection#b8d1d6ded7f8d4d995dcd7d5d996d9cacc"><span class="__cf_email__" data-cfemail="dcb5b2bab39cb0bdf1b8b3b1bdf2bdaea8">[email&#160;protected]</span></a></div>
       <div class="contact-detail reveal"><div class="contact-detail-label">Lokacija</div><p>Zagreb, Hrvatska</p></div>
     </div>
     <form class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST" autocomplete="off">
@@ -380,7 +378,7 @@
   <div class="lightbox-dots" id="lightboxDots"></div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // REVEAL
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
