@@ -328,6 +328,56 @@
   .footer-brand strong { font-weight: 600; color: var(--gold); }
   .footer-copy { font-size: 0.75rem; color: var(--cream-muted); }
 
+  /* ═══ LIGHTBOX ═══ */
+.portfolio-item { cursor: pointer; }
+
+.lightbox-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  background: rgba(10,10,8,0.96); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; flex-direction: column;
+}
+.lightbox-overlay.active { display: flex; }
+
+.lightbox-header {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: 1.5rem 2rem; display: flex; align-items: center;
+  justify-content: space-between; z-index: 2;
+}
+.lightbox-title { font-family: var(--heading); font-size: 1.1rem; font-weight: 300; color: rgba(245,240,232,0.7); letter-spacing: 0.08em; }
+.lightbox-title span { color: #21a6de; font-style: italic; }
+
+.lightbox-close {
+  width: 44px; height: 44px; background: none; border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7); font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+}
+.lightbox-close:hover { border-color: #21a6de; color: #21a6de; }
+
+.lightbox-stage {
+  position: relative; display: flex; align-items: center;
+  justify-content: center; width: 100%; height: 100%; padding: 5rem 5rem 4rem;
+}
+.lightbox-img-wrap { max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center; }
+.lightbox-img { max-width: 100%; max-height: calc(100vh - 10rem); object-fit: contain; border-radius: 2px; opacity: 0; transition: opacity 0.3s ease; display: block; }
+.lightbox-img.loaded { opacity: 1; }
+
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.8);
+  font-size: 1.1rem; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all 0.3s; z-index: 3;
+}
+.lightbox-nav:hover { background: #21a6de; border-color: #21a6de; color: #fff; }
+.lightbox-prev { left: 1rem; }
+.lightbox-next { right: 1rem; }
+.lightbox-nav:disabled { opacity: 0.2; pointer-events: none; }
+
+.lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.lightbox-dots { display: flex; gap: 6px; margin-top: 0; }
+.lightbox-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; border: none; }
+.lightbox-dot.active { background: #21a6de; transform: scale(1.3); }
+  
   /* ═══ ANIMATIONS ═══ */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -428,12 +478,9 @@
   </div>
 
   <div class="portfolio-grid">
-    <div class="portfolio-item p-1 reveal">
-      <img src="imgkitchen-dark-2.jpg" alt="Moderna tamna kuhinja" loading="lazy">
-      <div class="portfolio-caption">
-        <h3>Kuhinja — Dark Elegance</h3>
-        <p>Mramor, crni mat, lamele</p>
-      </div>
+    <div class="portfolio-item p-1 reveal" 
+     data-title="Kuhinja — Dark Elegance" 
+     data-images="imgkitchen-dark-2.jpg,imgkitchen-dark-1.jpg">
     </div>
     <div class="portfolio-item p-2 reveal reveal-d1">
       <img src="imgbedroom.jpg" alt="Moderna spavaća soba" loading="lazy">
@@ -633,6 +680,81 @@
   window.addEventListener('pageshow', (e) => {
     if (e.persisted) document.querySelector('.contact-form')?.reset();
   });
+// ═══ LIGHTBOX ═══
+document.querySelectorAll('.portfolio-item[data-title]').forEach(item => {
+  item.addEventListener('click', () => {
+    const title = item.dataset.title;
+    const images = item.dataset.images.split(',');
+    openLightbox(title, images);
+  });
+});
+
+let currentIndex = 0;
+let currentImages = [];
+
+function openLightbox(title, images) {
+  currentImages = images;
+  currentIndex = 0;
+  document.querySelector('.lightbox-title span').textContent = title;
+  buildDots(images.length);
+  loadImage(0);
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function loadImage(index) {
+  const img = document.getElementById('lightboxImg');
+  img.classList.remove('loaded');
+  img.src = currentImages[index];
+  img.onload = () => img.classList.add('loaded');
+  currentIndex = index;
+  document.getElementById('lightboxCounter').textContent = `${index + 1} / ${currentImages.length}`;
+  document.getElementById('lightboxPrev').disabled = index === 0;
+  document.getElementById('lightboxNext').disabled = index === currentImages.length - 1;
+  document.querySelectorAll('.lightbox-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+}
+
+function buildDots(count) {
+  const wrap = document.getElementById('lightboxDots');
+  wrap.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('button');
+    d.className = 'lightbox-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => loadImage(i));
+    wrap.appendChild(d);
+  }
+}
+
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxPrev').addEventListener('click', () => { if (currentIndex > 0) loadImage(currentIndex - 1); });
+document.getElementById('lightboxNext').addEventListener('click', () => { if (currentIndex < currentImages.length - 1) loadImage(currentIndex + 1); });
+document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft' && currentIndex > 0) loadImage(currentIndex - 1);
+  if (e.key === 'ArrowRight' && currentIndex < currentImages.length - 1) loadImage(currentIndex + 1);
+});
 </script>
+  <div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-header">
+    <div class="lightbox-title">La DoMa Art — <span></span></div>
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+  </div>
+  <div class="lightbox-stage">
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&#8592;</button>
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">&#8594;</button>
+  </div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+  <div class="lightbox-dots" id="lightboxDots"></div>
+</div>
 </body>
 </html>
