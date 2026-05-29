@@ -93,24 +93,24 @@
 
   /* PORTFOLIO */
   .portfolio { padding: 7rem 4rem; background: var(--bg); }
-  .portfolio-header { margin-bottom: 4rem; }
-  .portfolio-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto; gap: 1.2rem; }
-  .portfolio-item { overflow: hidden; position: relative; border-radius: 2px; cursor: pointer; }
-  .portfolio-item img { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s; }
-  .portfolio-item:hover img { transform: scale(1.05); }
-  .portfolio-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(26,23,20,0.7) 100%); opacity: 1; pointer-events: none; }
-  .portfolio-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.2rem 1.4rem; z-index: 2; opacity: 1; }
-  .portfolio-caption h3 { font-family: var(--heading); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.02em; color: #f5f0e8; }
-  .portfolio-caption p { font-size: 0.78rem; color: #c8c2b6; margin-top: 0.2rem; }
-  /* Plus ikona kao hint */
-  .portfolio-item .lb-hint { position: absolute; top: 1rem; right: 1rem; width: 34px; height: 34px; background: var(--blue); color: #fff; font-size: 1.3rem; line-height: 34px; text-align: center; z-index: 3; opacity: 0; transition: opacity 0.3s; border-radius: 50%; pointer-events: none; }
-  .portfolio-item:hover .lb-hint { opacity: 1; }
-  .p-1 { grid-column: 1 / 8; grid-row: 1; aspect-ratio: 16/10; }
-  .p-2 { grid-column: 8 / 13; grid-row: 1; aspect-ratio: 4/5; }
-  .p-3 { grid-column: 1 / 5; grid-row: 2; aspect-ratio: 3/4; }
-  .p-4 { grid-column: 5 / 9; grid-row: 2; aspect-ratio: 3/4; }
-  .p-5 { grid-column: 9 / 13; grid-row: 2; aspect-ratio: 3/4; }
-  .p-6 { grid-column: 1 / 13; grid-row: 3; aspect-ratio: 21/9; }
+  .portfolio-header { margin-bottom: 3rem; }
+
+  /* GALLERY FILTERS */
+  .gallery-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+  .filter-btn { padding: 0.5rem 1.4rem; border: 1px solid var(--border-gold); background: transparent; color: var(--cream-muted); font-family: var(--body); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+  /* GALLERY GRID */
+  .gallery-grid { columns: 4; column-gap: 1rem; }
+  .gallery-item { break-inside: avoid; margin-bottom: 1rem; overflow: hidden; position: relative; cursor: pointer; border-radius: 2px; }
+  .gallery-item img { width: 100%; height: auto; display: block; object-fit: initial; transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(26,23,20,0); transition: background 0.3s; display: flex; align-items: center; justify-content: center; }
+  .gallery-item:hover .gallery-overlay { background: rgba(26,23,20,0.35); }
+  .gallery-zoom { width: 38px; height: 38px; background: var(--blue); color: #fff; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: scale(0.8); }
+  .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1); }
+  .gallery-item.filter-hidden { display: none; }
 
   /* SERVICES */
   .services { padding: 7rem 4rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -203,8 +203,7 @@
     .hero-content { padding: 0 2rem 4rem; }
     .about-strip { padding: 3rem 2rem; gap: 2rem; }
     .portfolio { padding: 5rem 2rem; }
-    .portfolio-grid { grid-template-columns: 1fr 1fr; }
-    .p-1, .p-2, .p-3, .p-4, .p-5, .p-6 { grid-column: auto; grid-row: auto; aspect-ratio: 4/3; }
+    .gallery-grid { columns: 3; }
     .services { padding: 5rem 2rem; }
     .services-inner { grid-template-columns: 1fr; gap: 2rem; }
     .process { padding: 5rem 2rem; }
@@ -219,7 +218,9 @@
   }
   @media (max-width: 600px) {
     .about-strip { grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 1.5rem; }
-    .portfolio-grid { grid-template-columns: 1fr; }
+    .gallery-grid { columns: 2; }
+    .gallery-filters { gap: 0.4rem; }
+    .filter-btn { padding: 0.4rem 1rem; font-size: 0.72rem; }
     .process-steps { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.5rem; }
@@ -269,37 +270,97 @@
     <h2 class="section-title reveal">Odabrani <em>projekti</em></h2>
     <p class="section-desc reveal">Svaki prostor ima svoju priču. Pogledajte kako pretvaramo viziju u stvarnost.</p>
   </div>
-  <div class="portfolio-grid">
-    <div class="portfolio-item p-1 reveal" data-title="Kuhinja" data-images="imgkitchen-dark-2.jpg,imgkitchen-dark-1.jpg,imgkitchen-white.jpg,images/kuhinja1.jpeg,images/kuhinja2.jpeg,images/kuhinja3.jpeg,images/kuhinja4.jpeg,images/kuhinja5.jpeg,images/kuhinja6.jpeg,images/kuhinja7.jpeg">
-      <img src="imgkitchen-dark-2.jpg" alt="Moderna kuhinja po mjeri" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Kuhinja</h3><p>Moderni dizajn, materijali po mjeri</p></div>
-    </div>
-    <div class="portfolio-item p-2 reveal reveal-d1" data-title="Kupaonica" data-images="imgbathroom.jpg,images/kupaonica1.jpeg,images/kupaonica2.jpeg,images/kupaonica3.jpeg,images/kupaonica4.jpeg,images/kupaonica5.jpeg,images/kupaonica6.jpeg">
-      <img src="imgbathroom.jpg" alt="Kupaonica s mramorom" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Kupaonica</h3><p>Mramor, vessel umivaonik, premium obloge</p></div>
-    </div>
-    <div class="portfolio-item p-3 reveal" data-title="Ugradni ormar" data-images="images/ugradbeniormar1.jpeg,images/ugradbeniormar2.jpeg,images/ugradbeniormar3.jpeg,images/ugradbeniormar4.jpeg,images/ugradbeniormar5.jpeg,images/ugradbeniormar6.jpeg">
-      <img src="images/ugradbeniormar1.jpeg" alt="Ugradni ormar po mjeri" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Ugradni ormar</h3><p>Garderoberi i ormari po mjeri</p></div>
-    </div>
-    <div class="portfolio-item p-4 reveal reveal-d1" data-title="Spavaća soba" data-images="imgbedroom.jpg,images/spavacasoba1.jpeg,images/spavacasoba2.jpeg">
-      <img src="imgbedroom.jpg" alt="Spavaća soba" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Spavaća soba</h3><p>Sivi tonovi, LED rasvjeta</p></div>
-    </div>
-    <div class="portfolio-item p-5 reveal reveal-d2" data-title="Predsoblje" data-images="imgentryway.jpg">
-      <img src="imgentryway.jpg" alt="Predsoblje" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Predsoblje</h3><p>Lamele, hrast, tamni ormar</p></div>
-    </div>
-    <div class="portfolio-item p-6 reveal" data-title="Dnevna soba" data-images="imgkitchen-white.jpg">
-      <img src="imgkitchen-white.jpg" alt="Dnevna soba" loading="lazy">
-      <div class="lb-hint">+</div>
-      <div class="portfolio-caption"><h3>Dnevna soba</h3><p>Police, TV zone, dekorativne lamele</p></div>
-    </div>
+  <div class="gallery-filters reveal">
+    <button class="filter-btn active" data-filter="*">Sve</button>
+    <button class="filter-btn" data-filter="kuhinja">Kuhinja</button>
+    <button class="filter-btn" data-filter="kupaonica">Kupaonica</button>
+    <button class="filter-btn" data-filter="ugradni-ormar">Ugradni ormar</button>
+    <button class="filter-btn" data-filter="spavaca-soba">Spavaća soba</button>
+    <button class="filter-btn" data-filter="hodnik">Hodnik</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="imgkitchen-dark-2.jpg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="imgkitchen-dark-1.jpg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="imgkitchen-white.jpg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja1.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja2.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja3.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja4.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja5.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja6.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja7.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja8.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja9.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja10.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja11.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja12.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja13.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja14.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja15.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja16.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja17.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja18.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja19.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja20.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja21.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja22.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja23.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja24.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja25.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja26.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja27.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja28.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja29.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja30.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja31.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kuhinja" data-title="Kuhinja"><img src="images/kuhinja32.jpeg" alt="Kuhinja po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="imgbathroom.jpg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica1.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica2.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica3.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica4.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica5.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica6.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="kupaonica" data-title="Kupaonica"><img src="images/kupaonica7.jpeg" alt="Kupaonica po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar1.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar2.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar3.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar4.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar5.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar6.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar7.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar8.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar9.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar10.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar11.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar12.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar13.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar14.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar15.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar16.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar17.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar18.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar19.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar20.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar21.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar22.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="ugradni-ormar" data-title="Ugradni ormar"><img src="images/ugradbeniormar23.jpeg" alt="Ugradni ormar po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="imgbedroom.jpg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="images/spavacasoba1.jpeg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="images/spavacasoba2.jpeg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="images/spavacasoba3.jpeg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="images/spavacasoba4.jpeg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="spavaca-soba" data-title="Spavaća soba"><img src="images/spavacasoba5.jpeg" alt="Spavaća soba po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+
+    <div class="gallery-item" data-category="hodnik" data-title="Hodnik"><img src="imgentryway.jpg" alt="Hodnik po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="hodnik" data-title="Hodnik"><img src="images/hodnik1.jpeg" alt="Hodnik po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="hodnik" data-title="Hodnik"><img src="images/hodnik2.jpeg" alt="Hodnik po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+    <div class="gallery-item" data-category="hodnik" data-title="Hodnik"><img src="images/hodnik3.jpeg" alt="Hodnik po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
+
   </div>
 </section>
 
@@ -417,22 +478,44 @@
     if (e.persisted) document.querySelector('.contact-form')?.reset();
   });
 
+  // GALLERY FILTER
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      galleryItems.forEach(item => {
+        if (filter === '*' || item.dataset.category === filter) {
+          item.classList.remove('filter-hidden');
+        } else {
+          item.classList.add('filter-hidden');
+        }
+      });
+    });
+  });
+
   // LIGHTBOX
   let currentIndex = 0;
   let currentImages = [];
 
-  document.querySelectorAll('.portfolio-item[data-images]').forEach(item => {
+  galleryItems.forEach(item => {
     item.addEventListener('click', () => {
-      openLightbox(item.dataset.title, item.dataset.images.split(','));
+      const visible = [...galleryItems].filter(i => !i.classList.contains('filter-hidden'));
+      const images = visible.map(i => i.querySelector('img').getAttribute('src'));
+      const idx = visible.indexOf(item);
+      openLightbox(item.dataset.title, images, idx);
     });
   });
 
-  function openLightbox(title, images) {
+  function openLightbox(title, images, startIndex) {
     currentImages = images;
-    currentIndex = 0;
+    currentIndex = startIndex ?? 0;
     document.getElementById('lightboxTitle').textContent = title;
     buildDots(images.length);
-    loadImage(0);
+    loadImage(currentIndex);
     document.getElementById('lightbox').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -457,7 +540,7 @@
   function buildDots(count) {
     const wrap = document.getElementById('lightboxDots');
     wrap.innerHTML = '';
-    if (count <= 1) return;
+    if (count <= 1 || count > 8) return;
     for (let i = 0; i < count; i++) {
       const d = document.createElement('button');
       d.className = 'lightbox-dot' + (i === 0 ? ' active' : '');
