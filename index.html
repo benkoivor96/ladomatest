@@ -111,6 +111,12 @@
   .gallery-zoom { width: 38px; height: 38px; background: var(--blue); color: #fff; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: scale(0.8); }
   .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1); }
   .gallery-item.filter-hidden { display: none; }
+  .gallery-item.load-hidden { display: none; }
+  .load-more-wrap { text-align: center; margin-top: 3rem; }
+  .load-more-btn { display: inline-flex; align-items: center; gap: 0.8rem; padding: 0.9rem 2.5rem; border: 1px solid var(--border-gold); background: transparent; color: var(--cream-dim); font-family: var(--body); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .load-more-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .load-more-btn span { transition: transform 0.3s; display: inline-block; }
+  .load-more-btn:hover span { transform: translateY(3px); }
 
   /* SERVICES */
   .services { padding: 7rem 4rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -356,6 +362,9 @@
     <div class="gallery-item" data-category="hodnik" data-title="Hodnik"><img src="images/hodnik3.jpeg" alt="Hodnik po mjeri" loading="lazy" decoding="async"><div class="gallery-overlay"><span class="gallery-zoom">+</span></div></div>
 
   </div>
+  <div class="load-more-wrap">
+    <button class="load-more-btn" id="loadMore">Vidi više <span>↓</span></button>
+  </div>
 </section>
 
 <section id="usluge" class="services">
@@ -472,9 +481,32 @@
     if (e.persisted) document.querySelector('.contact-form')?.reset();
   });
 
-  // GALLERY FILTER
+  // GALLERY FILTER + LOAD MORE
   const filterBtns = document.querySelectorAll('.filter-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
+  const loadMoreBtn = document.getElementById('loadMore');
+  const ITEMS_PER_PAGE = 10;
+  let currentLimit = ITEMS_PER_PAGE;
+
+  function applyLoadLimit() {
+    const filtered = [...galleryItems].filter(i => !i.classList.contains('filter-hidden'));
+    filtered.forEach((item, idx) => {
+      if (idx < currentLimit) {
+        item.classList.remove('load-hidden');
+      } else {
+        item.classList.add('load-hidden');
+      }
+    });
+    const remaining = filtered.length - currentLimit;
+    if (remaining > 0) {
+      loadMoreBtn.style.display = 'inline-flex';
+      loadMoreBtn.innerHTML = `Vidi više (još ${remaining}) <span>↓</span>`;
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  applyLoadLimit();
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -488,7 +520,14 @@
           item.classList.add('filter-hidden');
         }
       });
+      currentLimit = ITEMS_PER_PAGE;
+      applyLoadLimit();
     });
+  });
+
+  loadMoreBtn.addEventListener('click', () => {
+    currentLimit += ITEMS_PER_PAGE;
+    applyLoadLimit();
   });
 
   // LIGHTBOX
@@ -497,7 +536,7 @@
 
   galleryItems.forEach(item => {
     item.addEventListener('click', () => {
-      const visible = [...galleryItems].filter(i => !i.classList.contains('filter-hidden'));
+      const visible = [...galleryItems].filter(i => !i.classList.contains('filter-hidden') && !i.classList.contains('load-hidden'));
       const images = visible.map(i => i.querySelector('img').getAttribute('src'));
       const idx = visible.indexOf(item);
       openLightbox(item.dataset.title, images, idx);
